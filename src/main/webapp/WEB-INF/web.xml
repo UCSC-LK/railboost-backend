@@ -140,6 +140,23 @@
     <url-pattern>/booking</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>Season</servlet-name>
+    <servlet-class>org.ucsc.railboostbackend.controllers.SeasonController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Season</servlet-name>
+    <url-pattern>/season</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Announcement</servlet-name>
+    <servlet-class>org.ucsc.railboostbackend.controllers.AnnouncementController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Announcement</servlet-name>
+    <url-pattern>/announcement</url-pattern>
+  </servlet-mapping>
 
 
   <servlet>
@@ -151,6 +168,44 @@
     <url-pattern>/roles</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>ParcelBooking</servlet-name>
+    <servlet-class>org.ucsc.railboostbackend.controllers.ParcelBookingController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ParcelBooking</servlet-name>
+    <url-pattern>/parcelBooking</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ParcelApprove</servlet-name>
+    <servlet-class>org.ucsc.railboostbackend.controllers.ApproveParcelController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ParcelApprove</servlet-name>
+    <url-pattern>/approveParcel </url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>User</servlet-name>
+    <servlet-class>org.ucsc.railboostbackend.controllers.UserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>User</servlet-name>
+    <url-pattern>/user</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>NotificationServlet</servlet-name>
+    //notification controller
+    <servlet-class>org.ucsc.railboostbackend.controllers.NotificationController</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>NotificationServlet</servlet-name>
+    <url-pattern>/notifications</url-pattern>
+  </servlet-mapping>
 
 
   <filter>
