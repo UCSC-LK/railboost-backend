@@ -1,6 +1,8 @@
 package org.ucsc.railboostbackend.services;
 
 import org.ucsc.railboostbackend.models.Booking;
+import org.ucsc.railboostbackend.models.ParcelBooking;
+import org.ucsc.railboostbackend.models.Season;
 import org.ucsc.railboostbackend.models.Staff;
 
 import javax.activation.DataHandler;
@@ -135,6 +137,52 @@ public class EmailService {
             "<p>Thank you for choosing RailBoost for your travel needs. We wish you a pleasant journey!</p>" +
             "<p>Best regards,<br/>The RailBoost Team</p>" +
             "</body></html>";
+    }
+    public String createSeasonTicketHTML(Season season){
+        return "<html><body>" +
+                "<h2>RailBoost Season Ticket Confirmation</h2>" +
+                "<p>Dear Passenger,</p>" +
+                "<p>We are delighted to inform you that your season ticket with RailBoost has been successfully confirmed. Below are the details of your booking:</p>" +
+                "<ul>" +
+                "  <li><strong>Start Station:</strong> " + season.getStartStation() + "</li>" +
+                "  <li><strong>End Station:</strong> " + season.getEndStation() + "</li>" +
+//                "  <li><strong>Passenger Type:</strong> " + season.getPassengerType() + "</li>" +
+                "  <li><strong>Start Date:</strong> " + season.getStartDate() + "</li>" +
+                "  <li><strong>End Date:</strong> " + season.getEndDate() + "</li>" +
+//                "  <li><strong>Duration:</strong> " + season.getDuration() + "</li>" +
+                "  <li><strong>Train Class:</strong> " + season.getTrainClass() + "</li>" +
+                "  <li><strong>Total Price:</strong> " + season.getTotalPrice() + "</li>" +
+                "</ul>" +
+                "<p>We look forward to serving you on your journey with RailBoost. If you have any questions or require further assistance, feel free to reach out to our customer support.</p>" +
+                "<p>Thank you for choosing RailBoost for your travel needs. We wish you a pleasant journey!</p>" +
+                "<p>Best regards,<br/>The RailBoost Team</p>" +
+                "</body></html>";
+    }
+
+    public String createParcelBookingEmail(ParcelBooking parcelBooking){
+        return "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <title>Parcel Notification</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <h2>Parcel Delivery Notification</h2>\n" +
+                "    <p>Dear "+parcelBooking.getReceiverName()+",</p>\n" +
+                "    <p>We are pleased to inform you that a parcel has been dispatched to you. Below are the details of your delivery:</p>\n" +
+                "    <ul>\n" +
+                "        <li><strong>Tracking ID:</strong>"+ parcelBooking.getTrackingId()+"</li>\n" +
+                "        <li><strong>Booking ID:</strong> "+parcelBooking.getBookingId()+"</li>\n" +
+                "        <li><strong>Item:</strong> "+parcelBooking.getItem()+"</li>\n" +
+               "         <li><strong>Tel No:</strong> "+parcelBooking.getSenderNIC()+"</li>\n" +
+                "    </ul>\n" +
+                "    <p>Please note that once your parcel arrives at the station, we will send you another email notification. You can then come to the station to collect your parcel.</p>\n" +
+                "    <p>If you have any questions or need further assistance, please feel free to contact our customer support team.</p>\n" +
+                "    <p>Thank you for choosing us for your parcel delivery. We look forward to serving you.</p>\n" +
+                "    <p>Best regards,<br/>The [Your Company Name] Team</p>\n" +
+                "</body>\n" +
+                "</html>\n";
     }
 
 
