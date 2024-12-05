@@ -17,10 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.beans.IntrospectionException;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URLDecoder;
 import java.text.DateFormat;
@@ -35,7 +32,6 @@ import static org.ucsc.railboostbackend.utilities.Security.verifyAccess;
 public class ScheduleController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // return a list of all the train schedules based on the filtering provided by the user.
         PrintWriter writer = resp.getWriter();
         ScheduleRepo scheduleRepo = new ScheduleRepo();
         List<Schedule> scheduleList;
@@ -48,8 +44,26 @@ public class ScheduleController extends HttpServlet {
                 .create();
 
 
-        String jsonQuery = URLDecoder.decode(req.getParameter("json"), "UTF-8");
-        Schedule reqSchedule = gson.fromJson(jsonQuery, Schedule.class);
+//        String jsonQuery = URLDecoder.decode(req.getParameter("json"), "UTF-8");
+//        Schedule reqSchedule = gson.fromJson(jsonQuery, Schedule.class);
+
+        Schedule reqSchedule = null;
+
+        if (req.getParameter("scheduleId")!=null){
+            reqSchedule = new Schedule(Short.parseShort(req.getParameter("scheduleId")));
+        }
+        else if (req.getParameter("json")!=null) {
+            String jsonQuery = URLDecoder.decode(req.getParameter("json"), "UTF-8");
+            reqSchedule = gson.fromJson(jsonQuery, Schedule.class);
+        }
+        else {
+            reqSchedule = new Schedule(
+                    req.getParameter("startStation"),
+                    req.getParameter("endStation"),
+                    LocalDate.parse(req.getParameter("date"), DateTimeFormatter.ofPattern("MM/dd/yyyy"))
+            );
+        }
+
 
         if(reqSchedule.getScheduleId()>0) {
             schedule = scheduleRepo.getScheduleById(reqSchedule.getScheduleId());
@@ -73,11 +87,12 @@ public class ScheduleController extends HttpServlet {
         Claims jwt = (Claims) req.getAttribute("jwt");
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalTime.class, new LocalTimeDeserializer())
+                .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
                 .create();
+
 
         if (verifyAccess(jwt, Roles.ADMINISTRATOR)) {
             Schedule schedule = gson.fromJson(req.getReader(), Schedule.class);
-//            Gson gson = new GsonBuilder().setDateFormat("HH:mm").create();
 
             ScheduleRepo scheduleRepo = new ScheduleRepo();
             boolean result = scheduleRepo.addSchedule(schedule);
